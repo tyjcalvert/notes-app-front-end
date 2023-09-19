@@ -7,9 +7,9 @@ function App() {
   const [url, setUrl] = useState('')
   const [data, setData] = useState('')
 
-  const getData = async (url) => {
+  const getData = async () => {
     try {
-      const response = await axios.get("https://notes-app-api-git-project-100.apps.ocp4.bluehatlab.net/api/notes")
+      const response = await axios.get(`${process.env.REACT_APP_ENDPOINT}/api/notes`)
       const dataAsText = JSON.stringify(response.data);
       setData(dataAsText);
     } catch (error) {
