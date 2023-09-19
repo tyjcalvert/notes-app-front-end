@@ -9,8 +9,8 @@ function App() {
 
   const getData = async () => {
     try {
-      console.log(process.env.REACT_APP_ENDPOINT);
-      const response = await axios.get(`${process.env.REACT_APP_ENDPOINT}/api/notes`)
+      console.log(import.meta.env);
+      const response = await axios.get(`${import.meta.env.VITE_ENDPOINT}/api/notes`)
       const dataAsText = JSON.stringify(response.data);
       setData(dataAsText);
     } catch (error) {
