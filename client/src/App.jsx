@@ -9,7 +9,7 @@ function App() {
 
   const getData = async (url) => {
     try {
-      const response = await axios.get(url)
+      const response = await axios.get("https://notes-app-api-git-project-100.apps.ocp4.bluehatlab.net/api/notes")
       const dataAsText = JSON.stringify(response.data);
       setData(dataAsText);
     } catch (error) {
