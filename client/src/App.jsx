@@ -4,21 +4,32 @@ import './App.css'
 
 
 function App() {
-  const [url, setUrl] = useState('')
+  const [todo, setTodo] = useState('')
   const [data, setData] = useState([])
+
+  const handleInputChange = (e) => {
+    setTodo(e.target.value)
+  }
 
   const getData = async () => {
     try {
       console.log(import.meta.env);
       const response = await axios.get(`${import.meta.env.VITE_ENDPOINT}/api/notes`)
+      console.log(response.data)
       setData(response.data);
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleUrlChange = (e) => {
-    setUrl(e.target.value)
+  const handleAddTodo = async (todo) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_ENDPOINT}/api/notes`, { title: todo })
+      console.log(response)
+      getData();
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -31,15 +42,15 @@ function App() {
         {/* <textarea defaultValue={data} disabled name="data" id="" cols="30" rows="10"/> */}
         {data.map((item, index) => {
           return (
-            <div style={{ backgroundColor: "#3B3B3B", borderRadius: "4px", padding: "4px", display: "flex", justifyContent: "space-around" }} key={index}>
-              <div><h3>ToDo: {item.title}</h3></div><input type='checkbox'/>
+            <div style={{ backgroundColor: "#3B3B3B", borderRadius: "4px", padding: "4px", marginBottom: "4px", display: "flex", justifyContent: "space-around" }} key={index}>
+              <div><h3>ToDo: {item.title}</h3></div><input type='checkbox'checked={item.isComplete}/>
             </div>
           )
         })}
       </div>
       <div className="input-container">
-        <input name="url-input" value={url} onChange={handleUrlChange}/>
-        <button onClick={() => getData(url)}>
+        <input name="todo-input" value={todo} onChange={handleInputChange}/>
+        <button onClick={() => handleAddTodo(todo)}>
           Add ToDo
         </button>
       </div>
